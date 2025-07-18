@@ -108,9 +108,9 @@
         y,
         radius: Math.random() * 2 + 1,
         color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: 0.3,
-        dx: (Math.random() - 0.5),
-        dy: (Math.random() - 0.5)
+        alpha: 0.5,
+        dx: (Math.random() - 1),
+        dy: (Math.random() - 1)
       });
     }
 
@@ -134,7 +134,7 @@
     }
 
     window.addEventListener('mousemove', e => {
-      for (let i = 0; i < 2; i++) { // reduced number of particles
+      for (let i = 0; i < 1; i++) { // reduced number of particles
         createParticle(e.clientX, e.clientY);
       }
     });
