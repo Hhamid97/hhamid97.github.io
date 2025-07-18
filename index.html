@@ -2,54 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hamim Hamid</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #fdf6f0;
-      color: #2c2c2c;
+      padding: 0;
+      box-sizing: border-box;
     }
+    body {
+      background: linear-gradient(135deg, #fcefee, #e6f6f8);
+      font-family: 'Inter', sans-serif;
+      color: #2c2c2c;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
     header {
       text-align: center;
-      padding: 80px 20px 40px;
+      padding: 100px 20px 40px;
+      position: relative;
     }
+
     h1 {
-      font-size: 3em;
-      margin-bottom: 0.2em;
+      font-size: 4em;
+      font-weight: 600;
+      background: linear-gradient(90deg, #f9a8d4, #a5f3fc, #c4b5fd);
+      background-size: 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 5s infinite linear;
+      position: relative;
+      z-index: 1;
     }
+
     p {
       font-size: 1.2em;
-      color: #555;
+      color: #444;
+      margin-top: 10px;
     }
+
     nav {
       text-align: center;
       margin-top: 30px;
     }
+
     nav a {
       margin: 0 15px;
       text-decoration: none;
       font-weight: 600;
       color: #4a4a4a;
       border-bottom: 2px solid transparent;
+      transition: 0.2s;
     }
+
     nav a:hover {
       border-bottom: 2px solid #caa9a0;
     }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     footer {
       text-align: center;
-      padding: 40px;
+      padding: 30px;
       font-size: 0.9em;
-      color: #999;
+      color: #888;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% }
+      100% { background-position: 200% }
     }
   </style>
 </head>
 <body>
   <header>
+    <canvas id="sparkleCanvas"></canvas>
     <h1>Hamim Hamid</h1>
-    <p>Computer Science Researcher • AI + Security • NC State University</p>
+    <p>Computer Science Researcher • AI + Security • NC State</p>
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
@@ -61,5 +100,60 @@
   <footer>
     © 2025 Hamim Hamid — All rights reserved.
   </footer>
+
+  <script>
+    // pastel sparkle effect near mouse
+    const canvas = document.getElementById('sparkleCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    function createParticle(x, y) {
+      const colors = ['#f9a8d4', '#a5f3fc', '#c4b5fd'];
+      particles.push({
+        x,
+        y,
+        radius: Math.random() * 4 + 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: 1,
+        dx: (Math.random() - 0.5) * 2,
+        dy: (Math.random() - 0.5) * 2
+      });
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach((p, i) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        p.x += p.dx;
+        p.y += p.dy;
+        p.alpha -= 0.01;
+
+        if (p.alpha <= 0) particles.splice(i, 1);
+      });
+      requestAnimationFrame(drawParticles);
+    }
+
+    window.addEventListener('mousemove', e => {
+      for (let i = 0; i < 5; i++) {
+        createParticle(e.clientX, e.clientY);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    drawParticles();
+  </script>
 </body>
 </html>
