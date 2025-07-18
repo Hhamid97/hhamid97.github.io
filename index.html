@@ -11,8 +11,9 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      background: linear-gradient(135deg, #fcefee, #e6f6f8);
+      background: linear-gradient(135deg, #f8f4fc, #e6f7f8);
       font-family: 'Inter', sans-serif;
       color: #2c2c2c;
       height: 100vh;
@@ -30,11 +31,7 @@
     h1 {
       font-size: 4em;
       font-weight: 600;
-      background: linear-gradient(90deg, #f9a8d4, #a5f3fc, #c4b5fd);
-      background-size: 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 5s infinite linear;
+      color: #c7a9dd; /* Pastel purple */
       position: relative;
       z-index: 1;
     }
@@ -77,18 +74,13 @@
       font-size: 0.9em;
       color: #888;
     }
-
-    @keyframes shimmer {
-      0% { background-position: 0% }
-      100% { background-position: 200% }
-    }
   </style>
 </head>
 <body>
   <header>
     <canvas id="sparkleCanvas"></canvas>
     <h1>Hamim Hamid</h1>
-    <p>Computer Science Researcher • AI + Security • NC State University</p>
+    <p>Computer Science Researcher • AI + Security • NC State</p>
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
@@ -102,7 +94,6 @@
   </footer>
 
   <script>
-    // pastel sparkle effect near mouse
     const canvas = document.getElementById('sparkleCanvas');
     const ctx = canvas.getContext('2d');
     let width = canvas.width = window.innerWidth;
@@ -111,15 +102,15 @@
     let particles = [];
 
     function createParticle(x, y) {
-      const colors = ['#f9a8d4', '#a5f3fc', '#c4b5fd'];
+      const colors = ['#d6c4e8', '#e3d6f3', '#f3eaff']; // Soft pastel purples
       particles.push({
         x,
         y,
-        radius: Math.random() * 2 + 2,
+        radius: Math.random() * 2 + 1,
         color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: 1,
-        dx: (Math.random() - 0.75) * 2,
-        dy: (Math.random() - 0.75) * 2
+        alpha: 0.3,
+        dx: (Math.random() - 0.5),
+        dy: (Math.random() - 0.5)
       });
     }
 
@@ -135,7 +126,7 @@
 
         p.x += p.dx;
         p.y += p.dy;
-        p.alpha -= 0.01;
+        p.alpha -= 0.005;
 
         if (p.alpha <= 0) particles.splice(i, 1);
       });
@@ -143,7 +134,7 @@
     }
 
     window.addEventListener('mousemove', e => {
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 2; i++) { // reduced number of particles
         createParticle(e.clientX, e.clientY);
       }
     });
