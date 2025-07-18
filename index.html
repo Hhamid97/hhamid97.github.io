@@ -102,13 +102,13 @@
     let particles = [];
 
     function createParticle(x, y) {
-      const colors = ['#d6c4e8', '#e3d6f3', '#f3eaff']; // Soft pastel purples
+      const colors = ['#D7F5D3', '#96DD99', '#B3E5B3']; // Soft pastel purples
       particles.push({
         x,
         y,
         radius: Math.random() * 2 + 1,
         color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: 0.5,
+        alpha: 1,
         dx: (Math.random() - 1),
         dy: (Math.random() - 1)
       });
